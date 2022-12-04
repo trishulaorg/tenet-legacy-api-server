@@ -1,0 +1,21 @@
+{
+  "name": "tenet-legacy-api-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build:nexus": "ts-node --compiler-options {\\\"module\\\":\\\"nodenext\\\",\\\"allowJs\\\":true,\\\"maxNodeModuleJsDepth\\\":10} --transpile-only server/graphql-schema/nexus",
+    "build:api": "npx graphql-codegen",
+    "build:graphql": "npm run prisma:regenerate && npm run build:nexus && npm run build:api",
+    "prisma:studio": "prisma studio",
+    "prisma:studio:local": "dotenv -e .env.local prisma studio",
+    "prisma:generate": "prisma generate",
+    "prisma:regenerate": "rimraf node_modules/prisma node_modules/nexus-prisma && npm i",
+    "migrate:staging": "dotenv -e .env.local prisma db push",
+    "migrate:test": "dotenv -e .env.test prisma migrate dev",
+    "seed:test": "prisma db seed",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
