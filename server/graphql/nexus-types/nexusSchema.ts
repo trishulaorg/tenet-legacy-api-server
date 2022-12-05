@@ -159,13 +159,13 @@ const PostDef = objectType({
     t.field(Post.content)
     t.field({
       ...Post.threads,
-      resolve: (source: any, ...rest) => {
+      resolve: ((source: any, ...rest) => {
         if ('threads' in source && Array.isArray(source['threads'])) {
           return source['threads'] as unknown as PrismaThread[]
         } else {
           return Post.threads.resolve(source, ...rest)
         }
-      },
+      }) as any,
     })
     t.nonNull.field('privilege', {
       type: PrivilegeDef.name,
